@@ -1,0 +1,18 @@
+{
+  "summary": "Tested Style DNA feature end-to-end. Backend keyless /api/ai/edit transform correctly classifies 6 prompt archetypes to their expected DNA presets (Bold Poster/Syne, Warm Editorial/Lora, Mono Technical/Space Mono, Noir Luxe/Playfair Display, Soft & Airy/Outfit, Quiet Luxury/Cormorant Garamond) — plus vague prompt defaulting. Response shape (blocks[], dna{id,name,fonts,palette}, message) is correct, block count preserved, each block.styles.fontFamily equals dna.fonts.display, display fonts never violate ANTI-SLOP list. Frontend /?demo=dna renders dna-canvas + dna-preset-list; clicking each of the 6 preset buttons updates dna-active-label and visibly restyles the canvas (font applied in DOM). Landing page loads with headline and no console errors.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": ["/app/backend/tests/test_style_dna.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.ts references model 'gemini-3.6-flash' which is not a valid Gemini model id — if a GEMINI_API_KEY is ever set, the keyed branch will fail. Consider 'gemini-2.5-flash' or gemini-1.5-flash. (Out of scope for this test since keyless is the tested path.)",
+    "site-dna.ts isDark fallback for non-hex colors is brittle; acceptable since palette uses hex only."
+  ],
+  "updated_files": ["/app/backend/tests/test_style_dna.py"],
+  "success_rate": {"backend": "100% (8/8)", "frontend": "100%"},
+  "test_credentials": "N/A - no auth required",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend regression suite lives at /app/backend/tests/test_style_dna.py. Uses REACT preview base URL directly. Editor/dashboard behind Supabase auth was NOT tested (no creds available)."
+}

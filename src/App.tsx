@@ -29,6 +29,7 @@ import { Persona } from './types';
 import { PERSONAS } from './data';
 import { supabase } from '@/lib/supabase';
 import PublicSiteView from './components/PublicSiteView';
+import DnaDemo from './components/DnaDemo';
 
 const getSubdomain = (): string | null => {
   if (typeof window === 'undefined') return null;
@@ -60,6 +61,10 @@ const getSubdomain = (): string | null => {
 
 export default function App() {
   const currentSubdomain = getSubdomain();
+
+  if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === 'dna') {
+    return <DnaDemo />;
+  }
 
   if (currentSubdomain) {
     return <PublicSiteView subdomain={currentSubdomain} />;

@@ -37,6 +37,17 @@
   /* Motion */
   --ease-editor: cubic-bezier(0.2, 0, 0, 1);
   --duration-editor: 180ms;
+
+  /* Spacing — true 4px scale (Idea A1) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
 }
 
 /* Reduced motion: kill animations/transitions for users who ask */
@@ -230,6 +241,82 @@
 .button-outline-on-dark:hover {
   background-color: #ffffff;
   color: #000000;
+}
+
+/* ==========================================
+   TEXTURE & CRAFT LAYER (Idea B3)
+   Cheap, global tactility that kills the flat
+   "rendered" AI-slop look. Opt-in via class.
+   ========================================== */
+
+/* Fine film grain — best over dark grounds. */
+.dna-grain {
+  position: relative;
+}
+.dna-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Coarser noise overlay for extra depth on dark hero/CTA grounds. */
+.dna-noise {
+  position: relative;
+}
+.dna-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  z-index: 1;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* 1px hairline rule — replaces heavy borders between sections. */
+.hairline {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 0, 0, 0.12) 20%,
+    rgba(0, 0, 0, 0.12) 80%,
+    transparent
+  );
+}
+.hairline-on-dark {
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.14) 20%,
+    rgba(255, 255, 255, 0.14) 80%,
+    transparent
+  );
+}
+
+/* Editorial drop-cap for long-form sections. */
+.dna-dropcap::first-letter {
+  float: left;
+  font-size: 3.4em;
+  line-height: 0.82;
+  padding: 0.05em 0.12em 0 0;
+  font-weight: 700;
+}
+
+/* Staggered entrance cascade helper (Idea B6). Content arrives like a
+   sentence being read, not a wall appearing. Respects reduced-motion above. */
+@keyframes dna-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.dna-rise {
+  animation: dna-rise 560ms var(--ease-editor, cubic-bezier(0.2, 0, 0, 1)) both;
 }
 
 

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { createPaymentOrder, processRazorpayWebhook, verifyRazorpaySignature } from "./api/_lib/payments";
 import { getWhatsAppConnection, isValidAutomationSecret, runNewLeadFollowUps, sendLeadFollowUp } from "./api/_lib/whatsapp";
 import { sendEmail } from "./api/_lib/email";
+import { classifyPromptToDNA, applyDNAToBlocks } from "./components/site-dna";
 
 dotenv.config();
 
@@ -33,53 +34,25 @@ app.post("/api/ai/edit", async (req, res) => {
     return res.status(400).json({ error: "Missing prompt or blocks data." });
   }
 
-  // Handle case when API Key is missing gracefully
+  // Handle case when API Key is missing by driving a coherent Style DNA change.
+  // This is the "change the whole brand of your site in one sentence" feature:
+  // the prompt is classified to a design SYSTEM (fonts, palette, radius, shadow,
+  // texture, motion) and every block is re-rendered through it — coherently,
+  // with page rhythm — instead of patching one property per block.
   if (!process.env.GEMINI_API_KEY) {
-    console.warn("GEMINI_API_KEY is not defined. Simulating visual edit locally.");
-    // Simulate aesthetic changes locally if no key is present to guarantee a fully working prototype
-    const isLuxury = prompt.toLowerCase().includes("luxur") || prompt.toLowerCase().includes("gold");
-    const isCosmic = prompt.toLowerCase().includes("cosmic") || prompt.toLowerCase().includes("dark") || prompt.toLowerCase().includes("purple");
-    const isMinimal = prompt.toLowerCase().includes("minim");
-
-    const simulated = blocks.map((b: any) => {
-      const styles = { ...b.styles };
-      if (isLuxury) {
-        styles.fontFamily = "Playfair Display";
-        styles.backgroundColor = "#09090b";
-        styles.textColor = "#f5f5f5";
-        styles.subtitleColor = "#a3a3a3";
-        styles.accentColor = "#d4af37";
-        styles.badgeBgColor = "#1a1a1a";
-        styles.badgeTextColor = "#d4af37";
-        styles.buttonBgColor = "#d4af37";
-        styles.buttonTextColor = "#09090b";
-      } else if (isCosmic) {
-        styles.fontFamily = "Space Grotesk";
-        styles.backgroundColor = "#030712";
-        styles.textColor = "#f9fafb";
-        styles.subtitleColor = "#9ca3af";
-        styles.accentColor = "#a855f7";
-        styles.badgeBgColor = "#1e1b4b";
-        styles.badgeTextColor = "#c084fc";
-        styles.buttonBgColor = "#a855f7";
-        styles.buttonTextColor = "#ffffff";
-        styles.useGradient = true;
-        styles.backgroundGradient = "linear-gradient(135deg, #090514 0%, #030712 100%)";
-      } else if (isMinimal) {
-        styles.fontFamily = "Inter";
-        styles.backgroundColor = "#ffffff";
-        styles.textColor = "#0f172a";
-        styles.subtitleColor = "#475569";
-        styles.accentColor = "#2563eb";
-        styles.badgeBgColor = "#f1f5f9";
-        styles.badgeTextColor = "#2563eb";
-        styles.buttonBgColor = "#0f172a";
-        styles.buttonTextColor = "#ffffff";
-        styles.useGradient = false;
-      }
-      return { ...b, styles };
-    });
-    return res.json({ blocks: simulated, message: "Applied local preset transformations." });
+    console.warn("GEMINI_API_KEY not set — applying local Style DNA transform.");
+    try {
+      const dna = classifyPromptToDNA(prompt);
+      const simulated = applyDNAToBlocks(blocks, dna);
+      return res.json({
+        blocks: simulated,
+        dna: { id: dna.id, name: dna.name, fonts: dna.fonts, palette: dna.palette },
+        message: `Applied the “${dna.name}” design system across every section.`,
+      });
+    } catch (e: any) {
+      console.error("Local DNA transform failed", e);
+      return res.status(500).json({ error: "Could not apply the design system." });
+    }
   }
 
   try {
@@ -421,10 +394,18 @@ app.post("/api/ecom/products-by-filter", async (req, res) => {
 // VITE DEV MIDDLEWARE / STATIC ASSETS
 // ==========================================
 async function startServer() {
+  const apiOnly = process.env.API_ONLY === "true";
+  if (apiOnly) {
+    app.get("/api/health", (_req, res) => res.json({ ok: true }));
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`API-only server running on http://localhost:${PORT}`);
+    });
+    return;
+  }
   if (process.env.NODE_ENV !== "production") {
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, allowedHosts: true },
       appType: "spa",
     });
     app.use(vite.middlewares);

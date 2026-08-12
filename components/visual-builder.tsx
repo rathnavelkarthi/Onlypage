@@ -19,6 +19,7 @@ import { useUndoRedo } from "@/hooks/use-undo-redo";
 import type { Viewport, Page } from "./builder-types";
 import { variantStylePatches, createBlock, createGlobalHeader, createGlobalFooter, ensureStructuredContent, fromRow, fromThemeBlock } from "./builder-helpers";
 import { PageManagerModal, SiteKitsModal, Field, ActionPanel, LeadRoutingPanel, BuilderDataConnections, BlockContentEditor, VariantPicker } from "./builder-panels";
+import { SITE_DNA_PRESETS, applyDNAToBlocks, type SiteDNA } from "./site-dna";
 
 export function VisualBuilder({
   site,
@@ -751,8 +752,22 @@ export function VisualBuilder({
     (!["Navigation", "Footer", "Map"].includes(selected.type) ||
       premiumModuleVariant);
 
+  const applySiteDNA = (dna: SiteDNA) => {
+    setBlocks(applyDNAToBlocks(blocks, dna));
+    if (globalHeader) setGlobalHeader(applyDNAToBlocks([globalHeader], dna)[0]);
+    if (globalFooter) setGlobalFooter(applyDNAToBlocks([globalFooter], dna)[0]);
+    setCommandOpen(false);
+    notify(`Applied the “${dna.name}” design system to the whole page.`, "success");
+  };
+
   const commands = useMemo(
     () => [
+      ...SITE_DNA_PRESETS.map((dna) => ({
+        label: `Restyle site — ${dna.name}`,
+        keywords: `style dna brand theme restyle ${dna.id} ${dna.keywords.join(" ")}`,
+        hint: dna.description,
+        action: () => applySiteDNA(dna),
+      })),
       ...BLOCK_CATEGORIES.filter(
         (category) => category.id !== "Navigation" && category.id !== "Footer",
       ).map((category) => ({
@@ -771,7 +786,7 @@ export function VisualBuilder({
         action: () => setPreviewOpen(true),
       },
     ],
-    [blocks],
+    [blocks, globalHeader, globalFooter],
   );
 
   return (
@@ -1621,7 +1636,7 @@ export function VisualBuilder({
                     {command.label}
                   </span>
                   <span className="mt-0.5 block text-xs font-medium text-slate-500">
-                    {command.keywords}
+                    {(command as { hint?: string }).hint ?? command.keywords}
                   </span>
                 </span>
                 <Plus size={15} className="text-lime-700" />
