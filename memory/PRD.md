@@ -65,6 +65,19 @@ push to GitHub (via the platform "Save to GitHub" button).
   already gated off published sites), B3 (site-kit thumbnail capture pipeline —
   ~100 headless screenshots, multi-day). Waves 2-3 are multi-week.
 
+## Landing + Signup redesign (2026-08-12)
+- **Signup/Sign-in** (`components/ui/login-form.tsx`) fully rebuilt on-brand
+  (cream/ink/lime editorial): ink brand panel + real product mock (removed the
+  off-brand indigo/slate palette and random abstract stock photo), 12px+ labels,
+  visible focus rings, brand-voice microcopy, data-testids (auth-page, auth-email,
+  auth-password, auth-name, auth-submit, auth-google, auth-toggle, auth-close).
+- **Landing** (`ModernLanding.tsx`): added a prominent interactive section
+  `StyleDnaShowcase.tsx` ("Change your whole brand in one sentence") — 6 DNA
+  chips restyle a live preview (fonts/colour/corners/accent/texture). Dark-palette
+  contrast handled via luminance check. Also: staggered hero entrance motion
+  (`.dna-rise`), focus-visible rings on CTAs, grain on the dark editor band, and a
+  new "Style DNA" nav link. All verified via screenshots.
+
 ## Backlog (from the proposal)
 - P1: Surface Style DNA as a first-class panel/tab in the editor (live DNA
   editor — Idea B8 Studio Mode); wire the AI command bar UI to `/api/ai/edit`.
