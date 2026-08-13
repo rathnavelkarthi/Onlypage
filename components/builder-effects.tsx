@@ -311,6 +311,15 @@ export function TextReveal({ text, className = "" }: { text: string; className?:
   const words = text.split(" ");
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  // Fallback: `useInView` never fires inside the builder's transformed/scaled
+  // canvas, which used to leave the animated hero title stuck at opacity:0
+  // (reads as "frozen/blank"). Force-reveal shortly after mount so the text is
+  // always visible, while still animating normally when scrolled into view.
+  const [forceVisible, setForceVisible] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setForceVisible(true), 500);
+    return () => clearTimeout(t);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -330,7 +339,7 @@ export function TextReveal({ text, className = "" }: { text: string; className?:
       ref={containerRef}
       variants={containerVariants}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      animate={isInView || forceVisible ? "visible" : "hidden"}
       className={`inline-block ${className}`}
     >
       {words.map((word, idx) => (

@@ -4,7 +4,7 @@ export interface BlockVariant {
   description: string;
   tags: string[];
   imageUrl?: string;
-  library?: 'Untitled UI' | 'Tailgrids' | 'Horizon UI' | 'UIverse' | 'MUI' | 'Built-in';
+  library?: 'Untitled UI' | 'Tailgrids' | 'Horizon UI' | 'Built-in';
 }
 
 export interface BlockCategory {
@@ -46,8 +46,8 @@ export const BLOCK_VARIANTS_MAP: Record<string, BlockVariant[]> = {
     { id: 'mono-grid', name: 'Monochrome Grid', description: 'Structured black-and-white visual system with precise editorial rhythm', tags: ['Mono', 'Grid', 'Swiss'] },
     { id: 'warm-studio', name: 'Warm Studio', description: 'Earthy colors and rounded shapes for human, craft-led businesses', tags: ['Warm', 'Organic', 'Friendly'] },
     { id: 'glass-panel', name: 'Glass Panel', description: 'Layered translucent surfaces with subtle borders and atmospheric depth', tags: ['Glass', 'Layered', 'Tech'] },
-    { id: 'uiverse-hero-glow', name: 'UIverse Glassmorphism Hero', description: 'Ambient gradient orbs, frosted glass chips, and a glowing gradient CTA', tags: ['UIverse', 'Glass', 'Gradient', 'Hero'], library: 'UIverse' },
-    { id: 'mui-hero', name: 'MUI Material Hero', description: 'Light Material hero with elevation surface mock, stat strip, and contained buttons', tags: ['MUI', 'Material', 'Elevation', 'Hero'], library: 'MUI' }
+    { id: 'uiverse-hero-glow', name: 'Ambient Glass Hero', description: 'Ambient gradient orbs, frosted glass chips, and a glowing gradient CTA', tags: ['Glass', 'Gradient', 'Hero'], library: 'Built-in' },
+    { id: 'mui-hero', name: 'Material Elevation Hero', description: 'Light hero with an elevated surface mock, stat strip, and contained buttons', tags: ['Elevation', 'Surface', 'Hero'], library: 'Built-in' }
   ],
   Features: [
     { id: 'signature-bento', name: 'Signature Capability Bento', description: 'Cohesive Signature-system bento cards with imagery, outcomes, and linked actions', tags: ['Signature', 'Premium', 'Bento', 'Media'] },
@@ -59,16 +59,16 @@ export const BLOCK_VARIANTS_MAP: Record<string, BlockVariant[]> = {
     { id: 'academy-courses', name: 'Editorial Course Grid', description: 'Image-led two-column curriculum cards with strong hierarchy and art-directed overlays', tags: ['Academy', 'Courses', 'Editorial', 'Media'], library: 'Built-in' },
     { id: 'feature-grid', name: 'Classic Icon Grid', description: 'Fully responsive grid layout with custom hover scale effects', tags: ['Grid', 'Modern', 'Symmetric'], library: 'Built-in' },
     { id: 'bento-box', name: 'Premium Bento Grid', description: 'Asymmetric grid layout inspired by Apple and Vercel', tags: ['Bento', 'Premium', 'Minimalist'], library: 'Built-in' },
-    { id: 'uiverse-feature-grid', name: 'UIverse Glass Feature Grid', description: 'Frosted glass cards with gradient icon tiles and hover glow', tags: ['UIverse', 'Glass', 'Features'], library: 'UIverse' },
-    { id: 'mui-feature-grid', name: 'MUI Material Feature Grid', description: 'Six Material surface cards with tinted icon avatars and elevation hover', tags: ['MUI', 'Material', 'Features'], library: 'MUI' },
+    { id: 'uiverse-feature-grid', name: 'Frosted Glass Features', description: 'Frosted glass cards with gradient icon tiles and hover glow', tags: ['Glass', 'Features'], library: 'Built-in' },
+    { id: 'mui-feature-grid', name: 'Material Surface Features', description: 'Six Material surface cards with tinted icon avatars and elevation hover', tags: ['Material', 'Features'], library: 'Built-in' },
   ],
   CTA: [
     { id: 'tailgrids-cta-banner', name: 'Tailgrids Gradient CTA', description: 'High-conversion newsletter CTA banner with email input and backdrop blur', tags: ['Tailgrids', 'CTA', 'Gradient', 'Newsletter'], library: 'Tailgrids' },
     { id: 'signature-cta', name: 'Signature Conversion Stage', description: 'Large restrained conversion moment with premium depth and a focused next action', tags: ['Signature', 'Premium', 'CTA', 'Conversion'], library: 'Built-in' },
     { id: 'simple-cta', name: 'Minimal Conversion Panel', description: 'High-contrast banner directing focus to a primary CTA', tags: ['Minimal', 'Fast'], library: 'Built-in' },
     { id: 'gradient-cta', name: 'High-Contrast Gradient Block', description: 'Glow-tinted canvas displaying high-energy newsletter setups', tags: ['Gradient', 'Modern', 'Immersive'], library: 'Built-in' },
-    { id: 'uiverse-cta', name: 'UIverse Glass CTA', description: 'Translucent frosted panel with gradient border and pulsing glow', tags: ['UIverse', 'Glass', 'CTA'], library: 'UIverse' },
-    { id: 'mui-cta', name: 'MUI Material CTA Band', description: 'Primary color band with decorative circles and white contained CTA', tags: ['MUI', 'Material', 'CTA'], library: 'MUI' },
+    { id: 'uiverse-cta', name: 'Frosted Glass CTA', description: 'Translucent frosted panel with gradient border and pulsing glow', tags: ['Glass', 'CTA'], library: 'Built-in' },
+    { id: 'mui-cta', name: 'Material Colour Band CTA', description: 'Primary color band with decorative circles and white contained CTA', tags: ['Material', 'CTA'], library: 'Built-in' },
     { id: 'untitled-cta', name: 'Untitled UI Dark CTA', description: 'Near-black centered conversion stage with feature chip and dual CTAs', tags: ['Untitled UI', 'Dark', 'CTA'], library: 'Untitled UI' },
   ],
   Gallery: [
@@ -88,8 +88,8 @@ export const BLOCK_VARIANTS_MAP: Record<string, BlockVariant[]> = {
     { id: 'tailgrids-pricing-table', name: 'Tailgrids Pricing Switcher', description: '3-Tier pricing table with interactive monthly/yearly billing toggle', tags: ['Tailgrids', 'Pricing', 'Toggle'], library: 'Tailgrids' },
     { id: 'signature-pricing', name: 'Signature Pricing System', description: 'Cohesive Signature-system plan comparison with working billing control', tags: ['Signature', 'Premium', 'Pricing', 'Interactive'], library: 'Built-in' },
     { id: 'saas-pricing', name: 'Standard SaaS 3-Tiers', description: 'Standard billing tiers highlighting a recommended choice', tags: ['SaaS', 'Tiers', 'Checklist'], library: 'Built-in' },
-    { id: 'uiverse-pricing', name: 'UIverse Glass Pricing', description: 'Glass tiers with gradient popular plan and glowing checkmarks', tags: ['UIverse', 'Glass', 'Pricing'], library: 'UIverse' },
-    { id: 'mui-pricing', name: 'MUI Material Pricing', description: 'Three Material tiers with a dark elevated recommended plan', tags: ['MUI', 'Material', 'Pricing'], library: 'MUI' },
+    { id: 'uiverse-pricing', name: 'Frosted Glass Pricing', description: 'Glass tiers with gradient popular plan and glowing checkmarks', tags: ['Glass', 'Pricing'], library: 'Built-in' },
+    { id: 'mui-pricing', name: 'Material Elevation Pricing', description: 'Three Material tiers with a dark elevated recommended plan', tags: ['Material', 'Pricing'], library: 'Built-in' },
   ],
   Testimonials: [
     { id: 'signature-stories', name: 'Signature Customer Story', description: 'Cohesive Signature-system testimonial carousel with focused story presentation', tags: ['Signature', 'Premium', 'Stories', 'Carousel'] },
@@ -103,8 +103,8 @@ export const BLOCK_VARIANTS_MAP: Record<string, BlockVariant[]> = {
     { id: 'quiet-luxury', name: 'Private Client Notes', description: 'Understated testimonials for premium and confidential services', tags: ['Luxury', 'Elegant', 'Service'] },
     { id: 'soft-gradient', name: 'Friendly Review Cloud', description: 'Warm approachable reviews with soft color and rounded surfaces', tags: ['Soft', 'Reviews', 'Friendly'] },
     { id: 'mono-grid', name: 'Case Study Quotes', description: 'Crisp testimonial system for agencies, studios, and B2B teams', tags: ['Mono', 'Case Study', 'B2B'] },
-    { id: 'uiverse-testimonials', name: 'UIverse Glass Testimonials', description: 'Frosted glass review cards with gradient avatars and star ratings', tags: ['UIverse', 'Glass', 'Reviews'], library: 'UIverse' },
-    { id: 'mui-testimonials', name: 'MUI Material Testimonials', description: 'Material review cards with tinted initial avatars and elevation', tags: ['MUI', 'Material', 'Reviews'], library: 'MUI' },
+    { id: 'uiverse-testimonials', name: 'Frosted Glass Reviews', description: 'Frosted glass review cards with gradient avatars and star ratings', tags: ['Glass', 'Reviews'], library: 'Built-in' },
+    { id: 'mui-testimonials', name: 'Material Surface Reviews', description: 'Material review cards with tinted initial avatars and elevation', tags: ['Material', 'Reviews'], library: 'Built-in' },
     { id: 'untitled-testimonials', name: 'Untitled UI Testimonial Grid', description: 'Clean bordered review cards with indigo initial avatars', tags: ['Untitled UI', 'Reviews'], library: 'Untitled UI' },
     { id: 'tailgrids-testimonials', name: 'Tailgrids Review Cards', description: 'Soft-shadowed testimonial tiles with quote watermark and blue avatars', tags: ['Tailgrids', 'Reviews'], library: 'Tailgrids' }
   ],
@@ -122,8 +122,8 @@ export const BLOCK_VARIANTS_MAP: Record<string, BlockVariant[]> = {
     { id: 'bold-poster', name: 'Campaign Signup Form', description: 'High-energy lead capture for launches, events, and limited offers', tags: ['Bold', 'Campaign', 'Lead'] },
     { id: 'soft-gradient', name: 'Friendly Enquiry Form', description: 'Approachable rounded form styling that reduces visual friction', tags: ['Soft', 'Friendly', 'Form'] },
     { id: 'mono-grid', name: 'Professional Brief Form', description: 'Structured intake for agencies, consultants, and B2B services', tags: ['Mono', 'Brief', 'Professional'] },
-    { id: 'uiverse-lead-form', name: 'UIverse Glass Lead Form', description: 'Frosted glass capture card with gradient focus rings and glow button', tags: ['UIverse', 'Glass', 'Lead'], library: 'UIverse' },
-    { id: 'mui-lead-form', name: 'MUI Material Lead Form', description: 'Material outlined fields with focused ring states and contained submit', tags: ['MUI', 'Material', 'Lead'], library: 'MUI' }
+    { id: 'uiverse-lead-form', name: 'Frosted Glass Lead Form', description: 'Frosted glass capture card with gradient focus rings and glow button', tags: ['Glass', 'Lead'], library: 'Built-in' },
+    { id: 'mui-lead-form', name: 'Material Outlined Lead Form', description: 'Material outlined fields with focused ring states and contained submit', tags: ['Material', 'Lead'], library: 'Built-in' }
   ],
   EComStore: [
     { id: 'signature-store', name: 'Signature Product Edit', description: 'Premium editorial product shelf with featured storytelling, live pricing, stock, and connected checkout actions', tags: ['Signature', 'Premium', 'Store', 'Commerce'] },
@@ -155,7 +155,7 @@ export const BLOCK_VARIANTS_MAP: Record<string, BlockVariant[]> = {
     { id: 'quiet-luxury', name: 'Luxury Detail Panel', description: 'Understated supporting content for premium brand stories', tags: ['Luxury', 'Detail', 'Elegant'] },
     { id: 'mono-grid', name: 'Monochrome Data Panel', description: 'Structured facts and process content with strong information hierarchy', tags: ['Mono', 'Data', 'Grid'] },
     { id: 'glass-panel', name: 'Glass Utility Panel', description: 'Atmospheric layered surface for technology and product details', tags: ['Glass', 'Tech', 'Utility'] },
-    { id: 'uiverse-stat-grid', name: 'UIverse Glass Stats', description: 'Frosted stat cards with gradient numbers and divider chips', tags: ['UIverse', 'Glass', 'Stats'], library: 'UIverse' },
+    { id: 'uiverse-stat-grid', name: 'Frosted Glass Stats', description: 'Frosted stat cards with gradient numbers and divider chips', tags: ['Glass', 'Stats'], library: 'Built-in' },
     { id: 'tailgrids-logo-cloud', name: 'Tailgrids Logo Cloud', description: 'Six-box trust strip for brand logos and social proof', tags: ['Tailgrids', 'Logos', 'Trust'], library: 'Tailgrids' },
     { id: 'horizon-data-table', name: 'Horizon Data Table', description: 'Dark admin check table with status pills and trend amounts', tags: ['Horizon UI', 'Table', 'Admin'], library: 'Horizon UI' }
   ],
@@ -207,7 +207,7 @@ export const BLOCK_VARIANTS_MAP: Record<string, BlockVariant[]> = {
     { id: 'footer-gradient-glow', name: '18. Shifting Horizon Gradient', description: 'Features an elegant moving neon horizon line separating the footer from the canvas.', tags: ['Gradient', 'Futuristic'] },
     { id: 'footer-jobs-hiring', name: '19. Active Careers Hiring Flag', description: 'Displays a glowing green pulsing "We are Hiring!" dot next to company links.', tags: ['Careers', 'Badge'] },
     { id: 'footer-copyright-only', name: '21. Super-Minimal Copyright Rail', description: 'Single elegant thin line containing copyright text and absolutely nothing else.', tags: ['Minimalist'] },
-    { id: 'mui-footer', name: 'MUI Dark Material Footer', description: 'Dark four-column footer with logo, social pills, and legal rail', tags: ['MUI', 'Material', 'Footer'], library: 'MUI' },
+    { id: 'mui-footer', name: 'Dark Elevated Footer', description: 'Dark four-column footer with logo, social pills, and legal rail', tags: ['Material', 'Footer'], library: 'Built-in' },
     { id: 'untitled-footer', name: 'Untitled UI Footer', description: 'Light five-column footer with tagline, link columns, and social icons', tags: ['Untitled UI', 'Footer'], library: 'Untitled UI' },
     { id: 'tailgrids-footer', name: 'Tailgrids Navy Footer', description: 'Navy four-column footer with newsletter-feel link groups and socials', tags: ['Tailgrids', 'Footer'], library: 'Tailgrids' }
   ],

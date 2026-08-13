@@ -51,6 +51,20 @@ push to GitHub (via the platform "Save to GitHub" button).
 - Gemini transform runs only when `GEMINI_API_KEY` is set (currently empty ->
   keyless DNA path).
 
+## Live-audit Wave 1 bug fixes (2026-08-12) — verified via testing_agent (4/4 PASS, live login)
+- B1/B5: `TextReveal` (builder-effects.tsx) now has a 500ms `forceVisible`
+  fallback — the animated hero title no longer stays invisible (opacity:0)
+  inside the builder's transformed canvas. Verified opacity:1.
+- B4: `VisualBuilder` wrapped in `<ErrorBoundary>` (efferd-dashboard-2.tsx);
+  Manage opens the Page Manager cleanly, no `insertBefore` white-screen.
+- B6: rebranded all `uiverse-*`/`mui-*` variant names, tags and `library`
+  badges to on-brand names (e.g. "Ambient Glass Hero", "Material Elevation
+  Hero"); removed `UIverse`/`MUI` from the `library` type union. Zero
+  user-visible or type-level traces remain. (Internal variant IDs unchanged.)
+- Deferred from the audit: B2 (stray SUBTITLE hover label — editor chrome,
+  already gated off published sites), B3 (site-kit thumbnail capture pipeline —
+  ~100 headless screenshots, multi-day). Waves 2-3 are multi-week.
+
 ## Backlog (from the proposal)
 - P1: Surface Style DNA as a first-class panel/tab in the editor (live DNA
   editor — Idea B8 Studio Mode); wire the AI command bar UI to `/api/ai/edit`.

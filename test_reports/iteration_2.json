@@ -1,0 +1,43 @@
+{
+  "summary": "Frontend-only validation of Wave 1 editor bug fixes (B1/B5, B4, B6) plus Style DNA Ctrl+K regression against the live preview URL, using the real Supabase login (rathnavelkarthi1@gmail.com). All 4 targets pass. Login → dashboard → 'Website Builder' navigation works; the visual builder loads at rathanvel's site.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_results_detail": {
+    "B1_B5_hero_title_visible": {
+      "status": "PASS",
+      "evidence": "Hero H1 'Identity, digital, and stories with staying power.' rendered with computed opacity=1, visibility=visible, width=769.5px, height=279.6px inside the transformed builder canvas within ~6s of load. TextReveal forceVisible fallback in components/builder-effects.tsx works — no invisible/opacity:0 heading observed."
+    },
+    "B4_manage_no_crash": {
+      "status": "PASS",
+      "evidence": "Clicked Active Page → Manage (pencil). PageManagerModal opened cleanly with title 'Pages', list of Home/Projects/Journal/Studio/Contact, Page settings form (name, slug, SEO title, meta description) and Save button. 0 pageerror events captured. No 'insertBefore' errors. No ErrorBoundary fallback triggered — real modal rendered. App stayed fully interactive."
+    },
+    "B6_rebrand_no_uiverse_mui": {
+      "status": "PASS",
+      "evidence": "Opened Hero Content tab → 'Layout variant' → 'Soft Gradient / 9 layouts available' picker. All 9 variants enumerated in the popover: Local Conversion, Quiet Luxury, Bold Poster, Soft Gradient (current), Monochrome Grid, Warm Studio, Glass Panel, Ambient Glass Hero, Material Elevation Hero. Regex scan for /(UIverse|MUI\\b)/ across entire document.body.innerHTML returned ZERO hits. Both previously-offending variants render with the new user-visible names 'Ambient Glass Hero' and 'Material Elevation Hero'."
+    },
+    "ctrl_k_style_dna_regression": {
+      "status": "PASS",
+      "evidence": "Pressing Ctrl+K in builder opens the command palette which lists exactly the 6 expected entries: 'Restyle site — Quiet Luxury', '— Noir Luxe', '— Bold Poster', '— Warm Editorial', '— Mono Technical', '— Soft & Airy'. Clicking 'Restyle site — Bold Poster' visibly restyled the canvas (bolder display type on 'A practice built around attention.' after ~5s). NOTE: could not confirm the success toast via DOM selectors ([data-sonner-toast], [role=status], [class*=toast]) — the toast either used a different selector or auto-dismissed before capture, but the underlying restyle mutation clearly succeeded."
+    }
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_style_dna.py"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "components/builder-data.ts line 7 still lists 'UIverse' | 'MUI' in the `library` type union even though no variant actually uses those values anymore (all rebranded variants are library:'Built-in'). Cosmetic — but since the intent of B6 is to purge those third-party names from the codebase, consider removing 'UIverse' and 'MUI' from the union type as well.",
+    "Internal variant IDs still use 'uiverse-*' and 'mui-*' prefixes (e.g. 'uiverse-hero-glow', 'mui-hero', 'uiverse-feature-grid', etc.). Not user-visible (never rendered) so B6 acceptance is unaffected, but a follow-up rename to e.g. 'ambient-glass-hero' / 'material-elevation-hero' would fully complete the rebrand and remove any lingering grep hits.",
+    "Bold Poster restyle succeeds functionally but the success toast could not be detected via standard selectors. Worth verifying the toast library integration/data-testid so future automated tests can assert it (currently only the visual delta is verifiable)."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "not tested (frontend-only iteration)", "frontend": "100% (4/4 targeted checks pass)"},
+  "test_credentials": "rathnavelkarthi1@gmail.com / Desmond@123 (Supabase auth, real account). Login succeeded on first attempt, dashboard loaded in ~9s.",
+  "seed_data_creation": "None. Used the existing rathanvel site data.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Deferred (per this iteration's scope): B2 stray SUBTITLE label (still visible above supporting copy in Hero — see screenshot content 'TITLE ... SUBTITLE ... BUTTON'), B3 site-kit thumbnail images (Site kits modal thumbnails currently render as bare gradient placeholders with no image content). Both were explicitly out of scope. To reach the builder: base URL → 'Log in' → email/password → 'Sign In' → wait 9s → click sidebar 'Website Builder' → wait ~6s. The 'Layout variant' picker lives on the *Content* tab (not Style tab) inside the right inspector, as a button showing the current variant name + '9 layouts available'; clicking it opens a Radix popover listing all variants. Backend Style DNA suite from iteration_1 (/app/backend/tests/test_style_dna.py) was not re-executed this iteration."
+}

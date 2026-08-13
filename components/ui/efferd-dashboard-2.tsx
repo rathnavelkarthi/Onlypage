@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AppShell, DashboardMode } from '@/components/app-shell';
 import { Dashboard } from '@/components/dashboard';
 import { VisualBuilder } from "@/components/visual-builder";
+import { ErrorBoundary } from '@/src/ErrorBoundary';
 import { LaunchMode } from '@/components/launch-mode';
 import { GrowthMode } from '@/components/growth-mode';
 import type { SiteRecord } from '@/components/ui/onboarding-wizard';
@@ -20,15 +21,17 @@ export function EfferdDashboard2({ onLogout, site, onUpdateSite }: EfferdDashboa
   // If the active tab is 'builder' (Website Builder), render the full screen website builder workspace
   if (activeTab === 'builder') {
     return (
-      <VisualBuilder
-        site={site}
-        onUpdateSite={onUpdateSite}
-        onNavigateModule={setActiveTab}
-        onExit={() => {
-          // Instead of logging out, return back to the main dashboard workspace Command Center
-          setActiveTab('home');
-        }} 
-      />
+      <ErrorBoundary>
+        <VisualBuilder
+          site={site}
+          onUpdateSite={onUpdateSite}
+          onNavigateModule={setActiveTab}
+          onExit={() => {
+            // Instead of logging out, return back to the main dashboard workspace Command Center
+            setActiveTab('home');
+          }}
+        />
+      </ErrorBoundary>
     );
   }
 
